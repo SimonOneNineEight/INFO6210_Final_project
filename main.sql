@@ -1,8 +1,29 @@
+CREATE TABLE `AnimalBreed` (
+  `PK,FK` breed_id,
+  `PK,FK` animal_id
+);
 
 CREATE TABLE `Breed` (
   `PK` breed_id,
   `String` species,
-  `String` description
+  `String` description,
+  FOREIGN KEY (`PK`) REFERENCES `AnimalBreed`(`PK,FK`)
+);
+
+CREATE TABLE `Shelter` (
+  `PK` shelter_id,
+  `String` name,
+  `String` address_line1,
+  `String` address_line2,
+  `String` city,
+  `int` zipcode,
+  `String` Email,
+  `String` phoneNumber,
+  `INT` capacity,
+  `INT` current_animals,
+  `Date` established_date,
+  `Enum('Public', 'Private', 'Rescue')` shelter_type,
+  `String` website
 );
 
 CREATE TABLE `Animal` (
@@ -13,7 +34,9 @@ CREATE TABLE `Animal` (
   `String` gendeer,
   `String` color,
   `INT` adoption_fee,
-  `String` photoURL
+  `String` photoURL,
+  FOREIGN KEY (`PK`) REFERENCES `AnimalBreed`(`PK,FK`),
+  FOREIGN KEY (`FK`) REFERENCES `Shelter`(`PK`)
 );
 
 CREATE TABLE `Person` (
@@ -40,7 +63,8 @@ CREATE TABLE `Adoption_Application` (
   `Date` Review_date,
   `FK` person_id,
   FOREIGN KEY (`FK`) REFERENCES `Animal`(`PK`),
-  FOREIGN KEY (`FK`) REFERENCES `Person`(`PK`)
+  FOREIGN KEY (`FK`) REFERENCES `Person`(`PK`),
+  FOREIGN KEY (`FK`) REFERENCES `Shelter`(`PK`)
 );
 
 CREATE TABLE `Donation` (
@@ -48,7 +72,8 @@ CREATE TABLE `Donation` (
   `String` name,
   `FK` shelter_id,
   `String` Amount,
-  `Date` DonationDate
+  `Date` DonationDate,
+  FOREIGN KEY (`FK`) REFERENCES `Shelter`(`PK`)
 );
 
 CREATE TABLE `Adoptor` (
@@ -78,7 +103,7 @@ CREATE TABLE `Vet` (
   `FK` person_id,
   `FK` clinic_id,
   `String` Specialization,
-  FOREIGN KEY (`FK`) REFERENCES `Vet_Clinic`(`int`)
+  FOREIGN KEY (`FK`) REFERENCES `Vet_Clinic`(`PK`)
 );
 
 CREATE TABLE `Health_Report` (
@@ -87,28 +112,9 @@ CREATE TABLE `Health_Report` (
   `FK` vet_id,
   `String` diagnosis,
   `String` treatment,
-  `Date` report_date
-);
-
-CREATE TABLE `AnimalBreed` (
-  `PK,FK` breed_id,
-  `PK,FK` animal_id
-);
-
-CREATE TABLE `Shelter` (
-  `PK` shelter_id,
-  `String` name,
-  `String` address_line1,
-  `String` address_line2,
-  `String` city,
-  `int` zipcode,
-  `String` Email,
-  `String` phoneNumber,
-  `INT` capacity,
-  `INT` current_animals,
-  `Date` established_date,
-  `Enum('Public', 'Private', 'Rescue')` shelter_type,
-  `String` website
+  `Date` report_date,
+  FOREIGN KEY (`FK`) REFERENCES `Animal`(`PK`),
+  FOREIGN KEY (`FK`) REFERENCES `Vet`(`PK`)
 );
 
 CREATE TABLE `Event` (
@@ -121,7 +127,7 @@ CREATE TABLE `Event` (
   `Enum('Adoption', 'Fundraising', 'Medical Checkup', 'Training')` event_type,
   `INT` capacity,
   `Enum('Scheduled', 'Ongoing', 'Completed', 'Cancelled')` status,
-  FOREIGN KEY (`Enum('Adoption', 'Fundraising', 'Medical Checkup', 'Training')`) REFERENCES `Shelter`(`PK`)
+  FOREIGN KEY (`FK`) REFERENCES `Shelter`(`PK`)
 );
 
 CREATE TABLE `Inventory` (
@@ -133,7 +139,8 @@ CREATE TABLE `Inventory` (
   `String` Unit,
   `String` Supplier,
   `Date` Date_added,
-  `Date` Last_updated
+  `Date` Last_updated,
+  FOREIGN KEY (`FK`) REFERENCES `Shelter`(`PK`)
 );
 
 CREATE TABLE `Shelter_Staff` (
@@ -144,7 +151,7 @@ CREATE TABLE `Shelter_Staff` (
   `Date` hire_date,
   `Decimal` salary,
   `ENUM("Active', 'Inactive')` status,
-  FOREIGN KEY (`FK`) REFERENCES `Shelter`(`String`)
+  FOREIGN KEY (`FK`) REFERENCES `Shelter`(`PK`)
 );
 
 CREATE TABLE `Pet_Status_Tracking` (
@@ -152,6 +159,7 @@ CREATE TABLE `Pet_Status_Tracking` (
   `FK` animal_id,
   `ENUM('Pending', 'Approved', 'Rejected', 'Completed')` status,
   `Date` StatusStartDate,
-  `Date` StatusEndDate
+  `Date` StatusEndDate,
+  FOREIGN KEY (`FK`) REFERENCES `Animal`(`PK`)
 );
 
