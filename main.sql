@@ -1,42 +1,43 @@
-CREATE TABLE `AnimalBreed` (
-  `PK,FK` breed_id,
-  `PK,FK` animal_id
+CREATE TABLE AnimalBreed (
+    breed_id INT,
+    animal_id INT,
+    PRIMARY KEY (breed_id, animal_id),
+    FOREIGN KEY (breed_id) REFERENCES Breed(breed_id),
+    FOREIGN KEY (animal_id) REFERENCES Animal(animal_id)
 );
 
-CREATE TABLE `Breed` (
-  `PK` breed_id,
-  `String` species,
-  `String` description,
-  FOREIGN KEY (`PK`) REFERENCES `AnimalBreed`(`PK,FK`)
+CREATE TABLE Breed (
+    breed_id INT PRIMARY KEY,
+    species VARCHAR(50),
+    description VARCHAR(255)
 );
 
-CREATE TABLE `Shelter` (
-  `PK` shelter_id,
-  `String` name,
-  `String` address_line1,
-  `String` address_line2,
-  `String` city,
-  `int` zipcode,
-  `String` Email,
-  `String` phoneNumber,
-  `INT` capacity,
-  `INT` current_animals,
-  `Date` established_date,
-  `Enum('Public', 'Private', 'Rescue')` shelter_type,
-  `String` website
+CREATE TABLE Shelter (
+    shelter_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    address_line1 VARCHAR(100) NOT NULL,
+    address_line2 VARCHAR(100),
+    city VARCHAR(50) NOT NULL,
+    zipcode INT NOT NULL,
+    email VARCHAR(100),
+    phoneNumber VARCHAR(20),
+    capacity INT,
+    current_animals INT,
+    established_date DATE,
+    shelter_type ENUM('Public', 'Private', 'Rescue'),
+    website VARCHAR(100)
 );
 
-CREATE TABLE `Animal` (
-  `PK` animal_id,
-  `FK` Shelter_id,
-  `String` name,
-  `Date` DateOfBirth,
-  `String` gendeer,
-  `String` color,
-  `INT` adoption_fee,
-  `String` photoURL,
-  FOREIGN KEY (`PK`) REFERENCES `AnimalBreed`(`PK,FK`),
-  FOREIGN KEY (`FK`) REFERENCES `Shelter`(`PK`)
+CREATE TABLE Animal (
+    animal_id INT PRIMARY KEY,
+    shelter_id INT,
+    name VARCHAR(50) NOT NULL,
+    date_of_birth DATE,
+    gender VARCHAR(10),
+    color VARCHAR(30),
+    adoption_fee INT,
+    photoURL VARCHAR(255),
+    FOREIGN KEY (shelter_id) REFERENCES Shelter(shelter_id)
 );
 
 CREATE TABLE `Person` (
