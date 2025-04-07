@@ -24,34 +24,6 @@ INSERT INTO final_project_group_1.dbo.Shelter (shelter_id, name, address_line1, 
 (9, 'Rainbow Bridge Shelter', '900 Rainbow Rd', 'Unit 3', 'Riverdale', 23456, 'bridge@rainbowshelter.org', '555-999-0000', 95, 70, '2003-12-12', 'Rescue', 'www.rainbowshelter.org'),
 (10, 'Loving Hearts Animal Rescue', '1000 Compassion Ave', NULL, 'Springfield', 12345, 'hearts@lovingrescue.org', '555-000-1111', 110, 83, '2011-04-18', 'Public', 'www.lovingrescue.org');
 
--- Vet_Clinic table inserts (Need to insert this before Vet due to circular dependency)
-INSERT INTO final_project_group_1.dbo.Vet_Clinic (clinic_id, clinic_name, vet_id, address_line1, address_line2, city, zipcode, phoneNumber, Email) VALUES
-(1, 'Healthy Paws Veterinary', NULL, '100 Vet St', NULL, 'Springfield', 12345, '555-123-9876', 'info@healthypaws.vet'),
-(2, 'Animal Care Center', NULL, '200 Medical Blvd', 'Suite A', 'Riverdale', 23456, '555-234-8765', 'care@animalcenter.vet'),
-(3, 'Pet Wellness Clinic', NULL, '300 Doctor Rd', NULL, 'Lakeside', 34567, '555-345-7654', 'wellness@petclinic.vet'),
-(4, 'Gentle Care Veterinary', NULL, '400 Health Ave', 'Unit 2', 'Springfield', 12345, '555-456-6543', 'info@gentlecare.vet'),
-(5, 'All Creatures Clinic', NULL, '500 Animal Health Dr', NULL, 'Lakeside', 34567, '555-567-5432', 'creatures@allcreatures.vet');
-
--- Vet table inserts
-INSERT INTO final_project_group_1.dbo.Vet (vet_id, person_id, clinic_id, Specialization) VALUES
-(1, 3, 1, 'General Practice'),
-(2, 7, 2, 'Surgery'),
-(3, 3, 3, 'Feline Medicine'),
-(4, 7, 4, 'Canine Medicine'),
-(5, 3, 5, 'Exotic Animals'),
-(6, 7, 1, 'Dental'),
-(7, 3, 2, 'Dermatology'),
-(8, 7, 3, 'Nutrition'),
-(9, 3, 4, 'Behavior'),
-(10, 7, 5, 'Oncology');
-
--- Update Vet_Clinic with vet_id after Vet records are created
-UPDATE final_project_group_1.dbo.Vet_Clinic SET vet_id = 1 WHERE clinic_id = 1;
-UPDATE final_project_group_1.dbo.Vet_Clinic SET vet_id = 2 WHERE clinic_id = 2;
-UPDATE final_project_group_1.dbo.Vet_Clinic SET vet_id = 3 WHERE clinic_id = 3;
-UPDATE final_project_group_1.dbo.Vet_Clinic SET vet_id = 4 WHERE clinic_id = 4;
-UPDATE final_project_group_1.dbo.Vet_Clinic SET vet_id = 5 WHERE clinic_id = 5;
-
 -- Animal table inserts
 INSERT INTO final_project_group_1.dbo.Animal (animal_id, shelter_id, name, date_of_birth, gender, color, adoption_fee, photoURL) VALUES
 (1, 1, 'Buddy', '2020-03-15', 'Male', 'Golden', 150, 'buddy_photo.jpg'),
